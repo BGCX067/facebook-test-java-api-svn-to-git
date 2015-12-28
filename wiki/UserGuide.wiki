@@ -1,0 +1,57 @@
+==Usage==
+
+The default implementation uses apache `HttpClient` project for communication with Facebook. To create a test user account, instantiate the `HttpClientFacebookTestUserStore` class and provide it with your [http://developers.facebook.com/docs/guides/canvas#auth application id and application secret].
+Call the `createTestUser()` method in the store and provide it with the [http://developers.facebook.com/docs/authentication/permissions Facebook permissions] you want your application to get from the test user. The first parameter tells whether the application should be auto-accepted by the test user (true) or not (false).
+
+{{{
+FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore("<appId>", "<appSecret>"));
+FacebookTestUserAccount account = facebookStore.createTestUser(true, "email,read_stream");
+}}}
+
+From the FacebookTestUserAccount, you have access to the different objects, such as the wall stream, friends, events etc.
+
+{{{
+String friendsAsJsonString = account.getFriends();
+}}}
+
+You can also let two test users be friends by issuing:
+
+{{{
+FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore("<appId>", "<appSecret>"));
+
+FacebookTestUserAccount account1 = facebookStore.createTestUser(true, "read_stream");
+FacebookTestUserAccount account2 = facebookStore.createTestUser(true, "read_stream");
+
+account1.makeFriends(account2);
+}}}
+
+When creating automated tests you probably want to start with a known state for your application. 
+Use the void `deleteAllTestUsers()` method on the user store to start with an empty set of users.
+You can also get a list of available test users from the store by calling the `getAllTestUsers()` method.
+
+{{{
+FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore("<appId>", "<appSecret>"));
+
+List<FacebookTestUserAccount> users = facebookStore.getAllTestUsers();
+facebookStore.deleteAllTestUsers();
+}}}
+
+For automated tests integrating with Facebook, the application need the access token for the test user to perform operations on its behalf. Here is an example of how a test case could look like.
+
+{{{
+FacebookTestUserStore facebookStore = new HttpClientFacebookTestUserStore("<appId>", "<appSecret>"));
+facebookStore.deleteAllTestUsers();
+FacebookTestUserAccount account = facebookStore.createTestUser(true, "email,read_stream");
+
+doStuff( account.accessToken() );
+
+assertTrue("Wall did not contain expected data", account.getProfileFeed().contains("stuff posted"));
+}}}
+
+_New since version 1.1.3_
+
+You may copy a test user from one application to another:
+
+{{{
+account.copyToOtherApplication("<otherAppId>", "<otherAppSecret>", true, "");
+}}}

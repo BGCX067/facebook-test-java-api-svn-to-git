@@ -1,0 +1,12 @@
+#summary Provides access to Facebook test users for an application
+
+= Introduction =
+
+To get access to Facebook test users, you need to have created an application:
+
+http://www.facebook.com/developers
+
+When this is done, you should be able to get the application ID and application secret
+needed to create an instance of a FacebookTestUserStore.
+
+See the UserGuide for examples.

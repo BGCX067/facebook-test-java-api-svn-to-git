@@ -1,0 +1,21 @@
+=Installation=
+
+==Maven users==
+
+===Facebook test java API===
+{{{
+<dependency>
+   <groupId>com.jayway.facebooktestjavaapi</groupId>
+   <artifactId>facebook-test-java-api</artifactId>
+   <version>1.1.4</version>
+</dependency>
+}}}
+
+===Examples===
+[https://github.com/jayway/facebook-test-java-api/tree/master/examples Examples project on Github]
+
+==Non-Maven users==
+
+Download [http://repo1.maven.org/maven2/com/jayway/facebooktestjavaapi/facebook-test-java-api/1.1.4/facebook-test-java-api-1.1.4.jar facebook-test-java-api-1.1.4.jar]. You may also need to download the [http://facebook-test-java-api.googlecode.com/files/third-party-dependencies-1.1.4.zip third-party dependencies] too.
+
+Put all of the downloaded jars in your classpath.
